@@ -169,12 +169,23 @@ public class Stanza {
 	}
 
 	/**
-	 * Rimuove un attrezzo dalla stanza (ricerca in base al nome).
+	 * Rimuove un'UNICA OCCORRENZA dell'attrezzo dalla stanza (ricerca in base al nome).
 	 * @param nomeAttrezzo
 	 * @return true se l'attrezzo e' stato rimosso, false altrimenti
 	 */
-	public boolean removeAttrezzo(Attrezzo attrezzo) {
-		// TODO da implementare
+	public boolean removeAttrezzo(String nomeAttrezzo) {
+	
+		for(Attrezzo attrezzo: this.attrezzi) { 
+			for(int i = 0; i < this.numeroAttrezzi; i++) {
+	
+				if(attrezzo.getNome().equals(nomeAttrezzo)) {
+				this.attrezzi[i] = this.attrezzi[numeroAttrezzi-1]; //sostituisco con ULTIMO attrezzo dell'array, invece che scalarli tutti
+				this.attrezzi[numeroAttrezzi-1] = null;
+				this.numeroAttrezzi--;
+				return true;
+				}
+			}
+		}
 		return false;
 	}
 
