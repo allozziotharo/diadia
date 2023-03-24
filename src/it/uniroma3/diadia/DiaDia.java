@@ -74,6 +74,8 @@ public class DiaDia {
 			this.aiuto();
 		else if (comandoDaEseguire.getNome().equals("prendi"))
 			this.prendi(comandoDaEseguire.getParametro());
+		else if (comandoDaEseguire.getNome().equals("posa"))
+			this.posa(comandoDaEseguire.getParametro());
 		else
 			System.out.println("Comando sconosciuto");
 		if (this.partita.vinta()) {
@@ -107,8 +109,8 @@ public class DiaDia {
 			System.out.println("Direzione inesistente");
 		else {
 			this.partita.getLabirinto().setStanzaCorrente(prossimaStanza);
-			int cfu = this.partita.getCfu();
-			this.partita.setCfu(cfu--);
+			int cfu = this.partita.getGiocatore().getCfu(); //NON E' RIDONDANTE! NON ELIMINARE PERCHE SENNO NON SAI COME ACCEDERE AI CFU DELLA PARTITA PER DECREMENTARLI!
+			this.partita.getGiocatore().setCfu(cfu--);
 		}
 		System.out.println(partita.getLabirinto().getStanzaCorrente().getDescrizione());
 	}
@@ -119,24 +121,59 @@ public class DiaDia {
 	private void fine() {
 		System.out.println("Grazie di aver giocato!");  // si desidera smettere
 	}
-
+	
+	
+	
+/**
+ * MAIN DEL GIOCO NELLA CLASSE DiaDia
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * */
+	
+	
 	public static void main(String[] argc) {
 		DiaDia gioco = new DiaDia();
 		gioco.gioca();
 	}
+
+	
+	
+	
+	
+	
 	
 	/**
 	 * Comando "Prendi".
 	 */
 	private void prendi (String nomeAttrezzo) {
 		Stanza stanzaCorrente = this.partita.getLabirinto().getStanzaCorrente();
-		stanzaCorrente.removeAttrezzo(nomeAttrezzo);
-		
-		System.out.println("\nAttrezzo rimosso, ora è nella tua borsa!\n");
-		
-				
+		if(stanzaCorrente.getAttrezzi() == null) {
+			System.out.println("\nla stanza è vuota!\n"); }
+
+		else if (stanzaCorrente.hasAttrezzo(nomeAttrezzo) == false) {
+			System.out.println("\npurtroppo non c'è\n");
+					}
+			
+		else {
+			Attrezzo attrezzoDaAggiungere = stanzaCorrente.getAttrezzo(nomeAttrezzo);
+			this.partita.getGiocatore().getBorsa().addAttrezzo(attrezzoDaAggiungere);
+		}
 	}
 
-
-	
+	private void posa(String nomeAttrezzo) {
+		Borsa borsaPartita = this.partita.getGiocatore().getBorsa();
+		if(borsaPartita.hasAttrezzo(nomeAttrezzo) == false) {
+			System.out.println("\nL'ATTREZZO NON E' NELLA BORSA\n");
+		}
+		
+		else {
+			borsaPartita.removeAttrezzo(nomeAttrezzo);
+			Attrezzo attrezzoDaAggiungere = borsaPartita.getAttrezzo(nomeAttrezzo);
+			this.partita.getLabirinto().getStanzaCorrente().addAttrezzo(attrezzoDaAggiungere);
+		}
+	}
 }

@@ -16,23 +16,28 @@ public class Borsa {
 		this.numeroAttrezzi = 0;
 	}
 	public boolean addAttrezzo(Attrezzo attrezzo) {
-		if (this.getPeso() + attrezzo.getPeso() > this.getPesoMax())
+		if (this.getPeso() + attrezzo.getPeso() > this.getPesoMax()) {
+			System.out.println("\nC'E' SPAZIO MA NON C'ENTRA\n");
 			return false;
-		if (this.numeroAttrezzi==10)
+		}
+		if (this.numeroAttrezzi==10) {
+			System.out.println("\nBORSA PIENA\n");
 			return false;
+		}
 		this.attrezzi[this.numeroAttrezzi] = attrezzo;
 		this.numeroAttrezzi++;
+		System.out.println("\nL'attrezzo è stato messo in borsa\n");
 		return true;
 	}
 	public int getPesoMax() {
 		return pesoMax;
 	}
 	public Attrezzo getAttrezzo(String nomeAttrezzo) {
-		Attrezzo a = null;
+		Attrezzo attrezzo = null;
 		for (int i= 0; i<this.numeroAttrezzi; i++)
 			if (this.attrezzi[i].getNome().equals(nomeAttrezzo))
-				a = attrezzi[i];
-		return a;
+				attrezzo = attrezzi[i];
+		return attrezzo;
 	}
 	public int getPeso() {
 		int peso = 0;
@@ -47,11 +52,28 @@ public class Borsa {
 		return this.getAttrezzo(nomeAttrezzo)!=null;
 	}
 	
+	/**
+	 * Rimuove un'UNICA OCCORRENZA dell'attrezzo dalla borsa (ricerca in base al nome).
+	 * COPIATA ALLA CLASSE STANZA, dato che anche qui serviva implementare una casistica se la borsa fosse stata vuota
+	 * @param nomeAttrezzo
+	 * @return true se l'attrezzo e' stato rimosso, false altrimenti
+	 */
+	public boolean removeAttrezzo(String nomeAttrezzo) {
 	
-	public Attrezzo removeAttrezzo(String nomeAttrezzo) {
-		Attrezzo a = null;
-		// ---> TODO (implementare questo metodo) <---
-		return a;
+		for(Attrezzo attrezzo: this.attrezzi) { 
+			for(int i = 0; i < this.numeroAttrezzi; i++) {
+	
+				if(attrezzo.getNome().equals(nomeAttrezzo)) {
+				this.attrezzi[i] = this.attrezzi[numeroAttrezzi-1]; //sostituisco con ULTIMO attrezzo dell'array, invece che scalarli tutti
+				this.attrezzi[numeroAttrezzi-1] = null;
+				this.numeroAttrezzi--;
+				System.out.println("\nL'attrezzo è stato rimosso dalla borsa\n");
+				return true;
+				}
+			}
+		}
+		System.out.println("\nRIMOZIONE FALLITA, sicuro che l'attrezzo sia presente?\n");
+		return false;
 	}
 	public String toString() {
 		StringBuilder s = new StringBuilder();

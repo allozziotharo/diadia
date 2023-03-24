@@ -22,6 +22,9 @@ public class Giocatore {
 			return this.cfu;
 		}
 		
+		public void setBorsa(Borsa borsa) {
+			this.borsa = borsa;
+		}
 		public Borsa getBorsa() {
 			return this.borsa;
 		}

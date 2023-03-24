@@ -61,6 +61,8 @@ public class Stanza {
     		}
     }
 
+    
+    
     /**
      * Restituisce la stanza adiacente nella direzione specificata
      * @param direzione
@@ -106,9 +108,11 @@ public class Stanza {
         if (this.numeroAttrezzi < NUMERO_MASSIMO_ATTREZZI) {
         	this.attrezzi[numeroAttrezzi] = attrezzo;
         	this.numeroAttrezzi++;
+        	System.out.println("\nAttrezzo aggiunto alla stanza\n");
         	return true;
         }
         else {
+        	System.out.println("\nLA STANZA E' PIENA, metti altri oggetti e uscimo noi!\n");
         	return false;
         }
     }
@@ -182,10 +186,12 @@ public class Stanza {
 				this.attrezzi[i] = this.attrezzi[numeroAttrezzi-1]; //sostituisco con ULTIMO attrezzo dell'array, invece che scalarli tutti
 				this.attrezzi[numeroAttrezzi-1] = null;
 				this.numeroAttrezzi--;
+				System.out.println("\nAttrezzo rimosso dalla stanza\n");
 				return true;
 				}
 			}
 		}
+		System.out.println("\nRIMOZIONE FALLITA, sicuro che l'attrezzo sia presente?\n");
 		return false;
 	}
 
